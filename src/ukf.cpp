@@ -22,11 +22,6 @@ UKF::UKF() {
 
   // initial covariance matrix
   P_ = MatrixXd(5, 5);
-  P_ << 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0,
-        0, 0, 1, 0, 0,
-        0, 0, 0, 1, 0,
-        0, 0, 0, 0, 1;
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
   std_a_ = 3;
@@ -99,6 +94,12 @@ UKF::UKF() {
 
   ///* Weights of sigma points
   weights_ = VectorXd(2*n_aug_+1);
+
+  P_ << std_radr_*std_radr_, 0, 0, 0, 0,
+        0, std_radr_*std_radr_, 0, 0, 0,
+        0, 0, std_radrd_*std_radrd_ , 0, 0,
+        0, 0, 0, std_radphi_*std_radphi_, 0,
+        0, 0, 0, 0, std_radrd_*std_radrd_;
   
   /**
    * TODO: Complete the initialization. See ukf.h for other member properties.
